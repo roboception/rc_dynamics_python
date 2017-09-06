@@ -1,0 +1,3 @@
+[submodule "rc_dynamics_msgs"]
+	path = rc_dynamics_msgs
+	url = https://github.com/roboception/rc_dynamics_msgs.git
