@@ -56,6 +56,7 @@ class RcUdpListener(object):
         try:
             msg.ParseFromString(data)
         except DecodeError as e:
+            logging.warning(e)
             return
         # Do something with the message...
         # print as an example
