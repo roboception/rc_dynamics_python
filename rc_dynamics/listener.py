@@ -17,10 +17,11 @@ from roboception.msgs.imu_pb2 import Imu
 
 
 class RcUdpListener(object):
-    def __init__(self, msgtype, port, interface=''):
+    def __init__(self, msgtype, port, interface='', callback=None):
         self._running = False
         self.port = port
         self.msgtype = msgtype
+        self.callback = callback if callback is not None else self.default_callback
 
         logging.info("Binding socket to listen for %s on %s, port %s" % (msgtype, interface, port))
         try:
@@ -29,6 +30,11 @@ class RcUdpListener(object):
         except socket.error as msg:
             logging.fatal('Failed to create socket. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
             sys.exit(1)
+
+    def default_callback(self, msg):
+        # Do something with the message...
+        # print as an example
+        logging.info("New {} message:\n{}".format(self.msgtype, msg))
 
     def run(self):
         self._running = True
@@ -58,9 +64,7 @@ class RcUdpListener(object):
         except DecodeError as e:
             logging.warning(e)
             return
-        # Do something with the message...
-        # print as an example
-        logging.info("New {} message:\n{}".format(self.msgtype, msg))
+        self.callback(msg)
 
     def stop(self):
         self._running = False
