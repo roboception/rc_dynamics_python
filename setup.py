@@ -13,6 +13,6 @@ setup(name='rc_dynamics',
       author_email='felix.ruess@roboception.de',
       license='BSD',
       packages=['rc_dynamics'],
-      install_requires=['protobuf'],
+      install_requires=['protobuf>=2.6.1'],
       include_package_data=True,
       zip_safe=False)
