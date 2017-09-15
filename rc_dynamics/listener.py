@@ -5,6 +5,7 @@ from __future__ import print_function, absolute_import
 import sys
 import logging
 import socket
+import threading
 
 from google.protobuf.message import DecodeError
 
@@ -16,8 +17,15 @@ from roboception.msgs.dynamics_pb2 import Dynamics
 from roboception.msgs.imu_pb2 import Imu
 
 
-class RcUdpListener(object):
+class RcUdpListener(threading.Thread):
+    """
+    Asynchronous listener for Roboception UDP protobuf messages. Executes
+    `default_callback()` during execution of `run()` per default. Accepts custom
+    callback functions passed during construction. Use `start()` to start the
+    listener and use `stop()` and `join()` after execution of the listener.
+    """
     def __init__(self, msgtype, port, interface='', callback=None):
+        super(RcUdpListener, self).__init__()
         self._running = False
         self.port = port
         self.msgtype = msgtype
@@ -86,13 +94,16 @@ def main():
     ul = None
     try:
         ul = RcUdpListener(msgtype=opts.msgtype, port=opts.port)
-        ul.run()
+        ul.start()
+        while True:
+            pass
     except KeyboardInterrupt:
         logging.info("Received keyboard interrupt.")
     finally:
         logging.info("Shutting down.")
         if ul is not None:
             ul.stop()
+            ul.join()
 
 
 if __name__ == '__main__':
