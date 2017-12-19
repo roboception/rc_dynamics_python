@@ -10,7 +10,7 @@ import threading
 from google.protobuf.message import DecodeError
 
 from os import path
-sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
+sys.path.append(path.dirname(path.abspath(__file__)))
 
 from roboception.msgs.frame_pb2 import Frame
 from roboception.msgs.dynamics_pb2 import Dynamics
