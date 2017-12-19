@@ -35,6 +35,7 @@ class RcUdpListener(threading.Thread):
         try:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             self.sock.bind((interface, port))
+            self.sock.settimeout(1.0)
         except socket.error as msg:
             logging.fatal('Failed to create socket. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
             sys.exit(1)
@@ -50,6 +51,8 @@ class RcUdpListener(threading.Thread):
             # Receive response
             try:
                 data, server = self.sock.recvfrom(2048)
+            except socket.timeout as e:
+                continue
             except socket.error as msg:
                 # don't print Interrupted system call
                 if msg[0] != 4:
