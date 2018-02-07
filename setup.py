@@ -15,4 +15,7 @@ setup(name='rc_dynamics',
       packages=find_packages(),
       install_requires=['protobuf>=2.6.1'],
       include_package_data=True,
+      entry_points={
+        'console_scripts': ["rc_dynamics_listener = rc_dynamics.listener:main"]
+      },
       zip_safe=False)
