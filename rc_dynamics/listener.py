@@ -84,7 +84,7 @@ class RcUdpListener(threading.Thread):
 
 def main():
     import argparse
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(format='[%(levelname)s] [%(asctime)s]: %(message)s', level=logging.INFO)
 
     parser = argparse.ArgumentParser(description="Receive rc_dynamics messages via UDP and print them.")
     parser.add_argument("-p", "--port", default=9000, type=int,

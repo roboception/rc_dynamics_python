@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 def readme():
     with open('README.md') as f:
@@ -12,7 +12,7 @@ setup(name='rc_dynamics',
       author='Felix Ruess',
       author_email='felix.ruess@roboception.de',
       license='BSD',
-      packages=['rc_dynamics'],
+      packages=find_packages(),
       install_requires=['protobuf>=2.6.1'],
       include_package_data=True,
       zip_safe=False)
